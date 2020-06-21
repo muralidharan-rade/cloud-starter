@@ -1,4 +1,4 @@
-package com.nativejava.restful;
+package com.nativejava.sample.restful;
 
 public class SampleBean {
 
