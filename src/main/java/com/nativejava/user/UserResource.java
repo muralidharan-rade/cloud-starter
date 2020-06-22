@@ -25,11 +25,17 @@ public class UserResource {
 
 	@GetMapping("/users/{userId}")
 	public User getUser(@PathVariable int userId) {
-		return service.getUserById(userId);
+		User user = service.getUserById(userId);
+		if (user == null)
+			throw new UserNotFoundException(UserConstants.USER_NOT_FOUND + " : " + userId);
+		return user;
 	}
 
 	@PostMapping("/users")
 	public ResponseEntity<Object> createUser(@RequestBody User user) {
+		if (user.getName() == null || user.getDob() == null) {
+			throw new UserInputNotValidException(UserConstants.USER_INPUT_NOT_VALID);
+		}
 		User addedUser = service.add(user);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(addedUser.getId())
 				.toUri();
