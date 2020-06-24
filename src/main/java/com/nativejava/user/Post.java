@@ -1,9 +1,16 @@
 package com.nativejava.user;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Post {
 
 	private int postId;
+	
+	@NotNull
+	@Size(min = 5, message = "Post size should be more than 5")
 	private String postMessage;
+	
 	private int userId;
 
 	public int getPostId() {

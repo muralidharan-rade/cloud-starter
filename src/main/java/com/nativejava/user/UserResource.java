@@ -3,6 +3,8 @@ package com.nativejava.user;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,10 +35,7 @@ public class UserResource {
 	}
 
 	@PostMapping("/users")
-	public ResponseEntity<Object> createUser(@RequestBody User user) {
-		if (user.getName() == null || user.getDob() == null) {
-			throw new UserInputNotValidException(UserConstants.USER_INPUT_NOT_VALID);
-		}
+	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
 		User addedUser = service.add(user);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(addedUser.getId())
 				.toUri();
@@ -58,10 +57,7 @@ public class UserResource {
 	}
 	
 	@PostMapping("/users/{userId}/posts")
-	public ResponseEntity<Object> createUserPost(@RequestBody Post post, @PathVariable int userId) {
-		if (post.getPostMessage() == null) {
-			throw new PostInputNotValidException(UserConstants.POST_NOT_VALID);
-		}
+	public ResponseEntity<Object> createUserPost(@Valid @RequestBody Post post, @PathVariable int userId) {
 		post.setUserId(userId);
 		Post savedPost = service.addPost(post);
 		

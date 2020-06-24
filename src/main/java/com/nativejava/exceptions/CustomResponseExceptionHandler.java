@@ -2,8 +2,10 @@ package com.nativejava.exceptions;
 
 import java.util.Date;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +43,7 @@ public class CustomResponseExceptionHandler extends ResponseEntityExceptionHandl
 				ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST.toString());
 		return new ResponseEntity(exceptionBean, HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@ExceptionHandler(PostNotFoundException.class)
 	public final ResponseEntity<Object> handlePostNotFoundException(PostNotFoundException ex, WebRequest request)
 			throws Exception {
@@ -49,12 +51,20 @@ public class CustomResponseExceptionHandler extends ResponseEntityExceptionHandl
 				ex.getLocalizedMessage(), HttpStatus.NOT_FOUND.toString());
 		return new ResponseEntity(exceptionBean, HttpStatus.NOT_FOUND);
 	}
-	
+
 	@ExceptionHandler(PostInputNotValidException.class)
-	public final ResponseEntity<Object> handlePostInputNotValidException(PostInputNotValidException ex, WebRequest request)
-			throws Exception {
+	public final ResponseEntity<Object> handlePostInputNotValidException(PostInputNotValidException ex,
+			WebRequest request) throws Exception {
 		ExceptionResponseBean exceptionBean = new ExceptionResponseBean(new Date(), ex.getMessage(),
 				ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST.toString());
+		return new ResponseEntity(exceptionBean, HttpStatus.BAD_REQUEST);
+	}
+
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		ExceptionResponseBean exceptionBean = new ExceptionResponseBean(new Date(), "Validation failed for the request",
+				ex.getBindingResult().getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST.toString());
 		return new ResponseEntity(exceptionBean, HttpStatus.BAD_REQUEST);
 	}
 
