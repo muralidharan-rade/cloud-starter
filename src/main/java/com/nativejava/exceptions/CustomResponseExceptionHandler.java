@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.nativejava.user.PostInputNotValidException;
+import com.nativejava.user.PostNotFoundException;
 import com.nativejava.user.UserInputNotValidException;
 import com.nativejava.user.UserNotFoundException;
 
@@ -35,6 +37,22 @@ public class CustomResponseExceptionHandler extends ResponseEntityExceptionHandl
 	@ExceptionHandler(UserInputNotValidException.class)
 	public final ResponseEntity<Object> handleUserInputNotValidException(UserInputNotValidException ex,
 			WebRequest request) throws Exception {
+		ExceptionResponseBean exceptionBean = new ExceptionResponseBean(new Date(), ex.getMessage(),
+				ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST.toString());
+		return new ResponseEntity(exceptionBean, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(PostNotFoundException.class)
+	public final ResponseEntity<Object> handlePostNotFoundException(PostNotFoundException ex, WebRequest request)
+			throws Exception {
+		ExceptionResponseBean exceptionBean = new ExceptionResponseBean(new Date(), ex.getMessage(),
+				ex.getLocalizedMessage(), HttpStatus.NOT_FOUND.toString());
+		return new ResponseEntity(exceptionBean, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(PostInputNotValidException.class)
+	public final ResponseEntity<Object> handlePostInputNotValidException(PostInputNotValidException ex, WebRequest request)
+			throws Exception {
 		ExceptionResponseBean exceptionBean = new ExceptionResponseBean(new Date(), ex.getMessage(),
 				ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST.toString());
 		return new ResponseEntity(exceptionBean, HttpStatus.BAD_REQUEST);
