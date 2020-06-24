@@ -2,6 +2,7 @@ package com.nativejava.user;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -63,11 +64,24 @@ public class UserDAOService {
 		}
 		return userPost;
 	}
-	
+
 	public Post addPost(Post post) {
 		post.setPostId(++postCount);
 		posts.add(post);
 		return post;
+	}
+
+	public User deleteUserById(int userId) {
+		Iterator<User> i = users.iterator();
+		while (i.hasNext()) {
+			User user = i.next();
+			if (user.getId() == userId) {
+				i.remove();
+				return user;
+			}
+		}
+		return null;
+
 	}
 
 }
