@@ -6,15 +6,21 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "User model of REST API")
 public class User {
 
 	private int id;
 	
 	@NotNull(message = "Name is must")
 	@Size(min = 2, message = "The length of the name should be more than 2")
+	@ApiModelProperty(required = true)
 	private String name;
 	
 	@NotNull(message = "DoB is must")
+	@ApiModelProperty(required = true)
 	@Past
 	private Date dob;
 
