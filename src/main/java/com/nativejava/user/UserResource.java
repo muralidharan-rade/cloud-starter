@@ -9,7 +9,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -37,13 +36,13 @@ public class UserResource {
 		User user = service.getUserById(userId);
 		if (user == null)
 			throw new UserNotFoundException(UserConstants.USER_NOT_FOUND + " : " + userId);
-		
-		//hateoas
+
+		// hateoas
 
 		EntityModel<User> userEntity = EntityModel.of(user);
 		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllUserPosts(userId));
 		userEntity.add(linkTo.withRel("user-posts"));
-		
+
 		return userEntity;
 	}
 
