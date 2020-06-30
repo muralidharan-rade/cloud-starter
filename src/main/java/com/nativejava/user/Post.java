@@ -3,14 +3,21 @@ package com.nativejava.user;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@JsonFilter(value = "PostFilter")
 public class Post {
 
 	private int postId;
-	
+
 	@NotNull
 	@Size(min = 5, message = "Post size should be more than 5")
 	private String postMessage;
-	
+
+	// static filtering
+	// @JsonIgnore
 	private int userId;
 
 	public int getPostId() {
