@@ -36,4 +36,24 @@ public class RestfulController {
 		return message;
 	}
 
+	@GetMapping(path = "/test/version", params = "v=1")
+	public String testVersioningParamV1() {
+		return "hello guys v1";
+	}
+
+	@GetMapping(path = "/test/version", params = "v=2")
+	public String testVersioningParamV2() {
+		return "hello guys v2";
+	}
+	
+	@GetMapping(path = "/test/versionhead", headers = "accept-version=v1")
+	public String testVersioningHeaderV1() {
+		return "hello guys - header v1";
+	}
+	
+	@GetMapping(path = "/test/versionhead", headers = "accept-version=v2")
+	public String testVersioningHeaderV2() {
+		return "hello guys - header v2";
+	}
+
 }
