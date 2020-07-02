@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserDAOService {
+
+	@Autowired
+	UserRepository userRepo;
 
 	private static List<User> users = new ArrayList<User>();
 	private static List<Post> posts = new ArrayList<Post>();
@@ -26,7 +31,7 @@ public class UserDAOService {
 	}
 
 	public List<User> findAll() {
-		return users;
+		return userRepo.findAll();
 	}
 
 	public User add(User user) {
@@ -36,12 +41,11 @@ public class UserDAOService {
 	}
 
 	public User getUserById(int id) {
-		for (User user : users) {
-			if (user.getId() == id) {
-				return user;
-			}
-		}
-		return null;
+		Optional<User> user = userRepo.findById(id);
+		if (user.isPresent())
+			return user.get();
+		else
+			return null;
 	}
 
 	public List<Post> findAllPosts(int userId) {

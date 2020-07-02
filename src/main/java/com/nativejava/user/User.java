@@ -36,6 +36,10 @@ public class User {
 		this.name = name;
 		this.dob = dob;
 	}
+	
+	public User() {
+
+	}
 
 	public int getId() {
 		return id;
