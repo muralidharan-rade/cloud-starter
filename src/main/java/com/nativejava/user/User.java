@@ -1,13 +1,17 @@
 package com.nativejava.user;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -30,13 +34,25 @@ public class User {
 	@Past
 	private Date dob;
 
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private List<Post> posts;
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+
 	public User(int id, String name, Date dob) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.dob = dob;
 	}
-	
+
 	public User() {
 
 	}

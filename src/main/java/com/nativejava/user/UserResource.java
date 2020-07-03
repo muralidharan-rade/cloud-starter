@@ -64,18 +64,15 @@ public class UserResource {
 	}
 
 	@DeleteMapping("/users/{userId}")
-	public User deleteUser(@PathVariable int userId) {
-		User user = service.deleteUserById(userId);
-		if (user == null)
-			throw new UserNotFoundException(UserConstants.USER_NOT_FOUND + " : " + userId);
-		return user;
+	public void deleteUser(@PathVariable int userId) {
+		service.deleteUserById(userId);
 	}
 
 	@GetMapping("/users/{userId}/posts")
 	public MappingJacksonValue getAllUserPosts(@PathVariable int userId) {
 		List<Post> posts = service.findAllPosts(userId);
 
-		Set<String> filterSet = new HashSet<String>(Arrays.asList("postId", "postMessage", "userId"));
+		Set<String> filterSet = new HashSet<String>(Arrays.asList("postId", "postMessage"));
 		return util.getPostBeanMapping(posts, filterSet);
 	}
 
@@ -93,11 +90,11 @@ public class UserResource {
 
 	@PostMapping("/users/{userId}/posts")
 	public ResponseEntity<Object> createUserPost(@Valid @RequestBody Post post, @PathVariable int userId) {
-		post.setUserId(userId);
-		Post savedPost = service.addPost(post);
+		service.addPost(post, userId);
 
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedPost.getPostId()).toUri();
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(post.getPostId())
+				.toUri();
+
 		return ResponseEntity.created(location).build();
 	}
 

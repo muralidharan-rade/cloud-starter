@@ -1,15 +1,21 @@
 package com.nativejava.user;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-//import com.fasterxml.jackson.annotation.JsonIgnore;
-
-@JsonFilter(value = "PostFilter")
+// @JsonFilter(value = "PostFilter")
+@Entity
 public class Post {
 
+	@Id
+	@GeneratedValue
 	private int postId;
 
 	@NotNull
@@ -17,8 +23,9 @@ public class Post {
 	private String postMessage;
 
 	// static filtering
-	// @JsonIgnore
-	private int userId;
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User user;
 
 	public int getPostId() {
 		return postId;
@@ -36,24 +43,21 @@ public class Post {
 		this.postMessage = postMessage;
 	}
 
-	public int getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Post(int postId, String postMessage, int userId) {
-		super();
-		this.postId = postId;
-		this.postMessage = postMessage;
-		this.userId = userId;
+	public Post() {
+
 	}
 
 	@Override
 	public String toString() {
-		return "Posts [postId=" + postId + ", postMessage=" + postMessage + ", userId=" + userId + "]";
+		return "Post [postId=" + postId + ", postMessage=" + postMessage + ", user=" + user + "]";
 	}
 
 }
