@@ -7,4 +7,7 @@ metadata:
 spec:
   containers:
   - image: muralidharanrade/cloud-start-restful:initial
-    name: user-api-pod-container  
+    name: user-api-pod-container 
+    ports:
+      - containerPort: 8080
+        protocol: TCP 
