@@ -2,16 +2,19 @@
 
 RESTful APIs to deal with User and User's posts entities.. 
 
-The APP is containerized and available in docker hub. 
 
+The APP is containerized and available in docker hub. 
 Kubernetes POD and Service definitions are available for k8s deployment. 
 
 
-Swagger documentation UI
+Swagger UI:
+
 /swagger-ui/
 
-HAL browser
+HAL browser:
+
 /explorer/index.html#uri=/
 
-H2 Console
+H2 Console:
+
 /h2-console
