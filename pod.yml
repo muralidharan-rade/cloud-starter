@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: user-api-pod
+  labels:
+    app: api
+spec:
+  containers:
+  - image: muralidharanrade/cloud-start-restful:initial
+    name: user-api-pod-container  
