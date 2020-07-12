@@ -46,8 +46,6 @@ public class UserResource {
 		if (user == null)
 			throw new UserNotFoundException(UserConstants.USER_NOT_FOUND + " : " + userId);
 
-		// hateoas
-
 		EntityModel<User> userEntity = EntityModel.of(user);
 		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllUserPosts(userId));
 		userEntity.add(linkTo.withRel("user-posts"));
