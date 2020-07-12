@@ -1,10 +1,20 @@
 # cloud-starter
 
-Swagger documentation UI
-http://localhost:8080/swagger-ui/
+RESTful APIs to deal with User and User's posts entities.. 
 
-HAL browser
-http://localhost:8080/explorer/index.html#uri=/
 
-H2 Console
-http://localhost:8080/h2-console
+The APP is containerized and available in docker hub. 
+Kubernetes POD and Service definitions are available for k8s deployment. 
+
+
+Swagger UI:
+
+/swagger-ui/
+
+HAL browser:
+
+/explorer/index.html#uri=/
+
+H2 Console:
+
+/h2-console
